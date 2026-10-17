@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Διαγωνισμός πληροφορικής! </title>
+    <script>
+        function validateScores() {
+            const scores = document.querySelectorAll(".score");
+            for (let score of scores) {
+                if (score.value < 0 || score.value > 100 || score.value === "") {
+                    alert("Οι βαθμοί πρέπει να είναι από το 0 έως το 100.");
+                    return false;
+                }
+            }
+            return true;
+        }
+		
+    </script>
+</head>
+
+<body>
+    <h1> Διαγωνισμός πληροφορικής </h1>
+    <form action="process.php" method="POST" onsubmit="return validateScores()">
+        <label for="name"> Όνομα υποψηφίου: </label>
+        <input type="text" id="name" name="name" required> <br> <br>
+        
+        <label> Βαθμοί: </label> <br>
+        <input type="number" class="score" name="scores[]" min="0" max="100" required> 1ος βαθμός <br>
+        <input type="number" class="score" name="scores[]" min="0" max="100" required> 2ος βαθμός <br>
+        <input type="number" class="score" name="scores[]" min="0" max="100" required> 3ος βαθμός <br>
+        <input type="number" class="score" name="scores[]" min="0" max="100" required> 4ος βαθμός <br>
+        <input type="number" class="score" name="scores[]" min="0" max="100" required> 5ος βαθμός <br>
+        <input type="number" class="score" name="scores[]" min="0" max="100" required> 6ος βαθμός <br> <br>
+
+        <button type="submit"> Επόμενος διαγωνιζόμενος </button>
+    </form>
+</body>
+</html>

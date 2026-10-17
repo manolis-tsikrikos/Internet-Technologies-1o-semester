@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Ώρα για διασκέδαση! 🥰 </title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    h1 {
+      font-size: 2rem;
+    }
+    #range-buttons button {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 1rem;
+    }
+    #game {
+      margin-top: 20px;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    #attempts {
+      margin-top: 10px;
+      text-align: left;
+      display: inline-block;
+    }
+    #restart {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1> Δώσε μου έναν αριθμό </h1>
+  <p> Από το 1 έως... </p>
+  
+  <div id="range-buttons">
+    <button onclick="startGame(10)"> το 10 </button>
+    <button onclick="startGame(50)"> το 50 </button>
+    <button onclick="startGame(100)"> το 100 </button>
+  </div>
+
+  <div id="game" style="display: none;">
+    <p> Δώσε έναν αριθμό: </p>
+	
+    <input type="number" id="guess" placeholder="π.χ. 5" />
+	
+    <button onclick="checkGuess()"> Υποβολή </button>
+
+    <div id="result"> </div>
+    <div id="attempts">
+      <h3> Ιστορικό: </h3>
+      <div id="history"> </div>
+    </div>
+    <center> <button id="restart" onclick="restartGame()" style="display: none;"> Ξαναπαίξε... καλή επιτυχία!!! </button> </center>
+  </div>
+
+  <script>
+ 
+    let secretNumber;
+    let attempts;
+    let maxNumber;
+
+    function startGame(max) {
+      maxNumber = max;
+      secretNumber = Math.floor(Math.random() * maxNumber) + 1;
+      attempts = 0;
+
+      document.getElementById("game").style.display = "block";
+      document.getElementById("result").innerHTML = "";
+      document.getElementById("history").innerHTML = "";
+      document.getElementById("restart").style.display = "none";
+    }
+
+    function checkGuess() {
+      const guessInput = document.getElementById("guess");
+      const userGuess = parseInt(guessInput.value);
+
+      if (!userGuess || userGuess < 1 || userGuess > maxNumber) {
+        alert(`Παρακαλώ δώσε έναν αριθμό μεταξύ 1 και ${maxNumber}`);
+        return;
+      }
+
+      attempts++;
+      const history = document.getElementById("history");
+
+      if (userGuess === secretNumber) {
+        document.getElementById("result").innerHTML = `🎉 Συγχαρητήρια! Βρήκες τον αριθμό σε ${attempts} προσπάθειες κι η έκπτωσή σου είναι ${secretNumber}%.`;
+        history.innerHTML += `<p>Προσπάθεια ${attempts}: ${userGuess} (Σωστός!)</p>`;
+        document.getElementById("restart").style.display = "block";
+      } else if (userGuess < secretNumber) {
+        document.getElementById("result").innerHTML = "Ο αριθμός σου είναι μεγαλύτερος.";
+        history.innerHTML += `<p>Προσπάθεια ${attempts}: ${userGuess} (Μικρότερος)</p>`;
+      } else {
+        document.getElementById("result").innerHTML = "Ο αριθμός σου είναι μικρότερος.";
+        history.innerHTML += `<p>Προσπάθεια ${attempts}: ${userGuess} (Μεγαλύτερος)</p>`;
+      }
+
+      guessInput.value = "";
+    }
+
+    function restartGame() {
+      document.getElementById("game").style.display = "none";
+    }
+  </script>
+
+</body>
+</html>

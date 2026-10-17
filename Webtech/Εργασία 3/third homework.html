@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css">
+    <title> Φόρμα Εγγραφής </title>
+</head>
+
+<body style="background-color:#aef9ff">
+
+    <h2> <center> <p style=" color:#b900ff; background-color:#d5dbdb; border-style:double; border-color:black"> <b> <i> <ins> Φόρμα εγγραφής </ins> </i> </b> </center> </h2>
+    <form action="submit_registration" method="POST">
+		<fieldset>
+            <legend style="color:#b900ff; font-weight:bold;"> <u> <p style="border-style:dotted"> Προσωπικά στοιχεία </p> </u> </legend>
+            <label title="Συμπληρώστε το φύλο σας"> Τίτλος: </label> <br>
+            <input type="radio" id="mr" name="title" value="κύριος" required> <!-- Κουμπιά επιλογής (Κύριος / Κυρία). --> 
+            <label for="mr"> Κύριος </label>
+            <input type="radio" id="mrs" name="title" value="κυρία">
+            <label for="mrs"> Κυρία </label>
+            <br> <br>
+			
+			<label for="first_name" title="Συμπληρώστε το επώνυμό σας με ελληνικά γράμματα"> Όνομα: </label>
+			<input type="text" id="first_name" name="first_name" placeholder="π.χ. Εμμανουήλ" required>
+            <br> <br>
+
+			<label for="last_name" title="Συμπληρώστε το επώνυμό σας με ελληνικά γράμματα"> Επώνυμο: </label>
+			<input type="text" id="last_name" name="last_name" placeholder="π.χ. Τσικρικός" required>
+            <br> <br>
+
+            <label for="birthYear" title="Επιλέξτε έτος γέννησης"> Ημερομηνία γέννησης: </label>
+			<input type="date" name="year" min="1980-01-01" max="2022-12-31">
+            <br> <br>
+
+            <label for="country" title="Επιλέξτε τη χώρα κατοικίας σας"> Χώρα κατοικίας: </label>
+            <select size="3" name="country" required>
+                <option selected value="Ελλάδα"> Ελλάδα </option>
+                <option value="Τουρκία"> Τουρκία </option>
+                <option value="Ιταλία"> Ιταλία </option>
+                <option value="Αλβανία"> Αλβανία </option>
+                <option value="Βουλγαρία"> Βουλγαρία </option>
+				<option value="Άλλη χώρα"> Άλλη χώρα </option>
+            </select>
+            <br> <br>
+
+            <label for="maritalStatus" title="Επιλέξτε την οικογενειακή σας κατάσταση"> Οικογενειακή κατάσταση: </label>
+            <select id="maritalStatus" name="maritalStatus" required>
+                <option value="Έγγαμος"> Έγγαμος </option>
+                <option value="Άγαμος"> Άγαμος </option>
+            </select>
+        </fieldset>
+
+        <fieldset>
+            <legend style="color:#b900ff; font-weight:bold;"> <p style="border-style:dotted"> <u> Στοιχεία επικοινωνίας </p> </u> </legend>
+			
+			<label for="address" title="Συμπληρώστε την διεύθυνση σας"> Διεύθυνση: </label>
+			<input type="text" id="adress" adress="email" placeholder="π.χ. Καραολή και Δημητρίου 80" size="22" required>
+			<br> <br>
+
+			<label for="city" title="Συμπληρώστε την πόλη σας"> Πόλη: </label>
+			<input type="text" id="city" name="city" maxlength="15" size="10" placeholder="π.χ. Πειραιάς">
+			<br> <br>
+
+			<label for="region" title="Συμπληρώστε την περιοχή/περιφέρειά σας"> Περιοχή/Περιφέρεια: </label>
+			<input type="text" id="region" name="region" placeholder="π.χ. Αττική">
+			<br> <br>
+			
+			<label for="postalCode" title="Συμπληρώστε τον ταχυδρομικό κώδικά σας"> Ταχυδρομικός κώδικας: </label>
+			<input type="text" id="postalCode" name="postalCode" placeholder="π.χ. 18534">
+			<br> <br>
+
+			<label for="phone" title="Συμπληρώστε το τηλέφωνό σας"> Τηλέφωνο: </label>
+			<input type="tel" id="phone" name="phone" placeholder="π.χ. 6906013305">
+			<br> <br>
+
+			<label for="email" title="Συμπληρώστε το ηλεκτρονικό ταχυδρομείο σας"> Ηλεκτρονικό ταχυδρομείο: </label>
+			<input type="email" id="email" name="email" placeholder="π.χ. mantsik06@gmail.com" required>
+			<br> <br>
+		</fieldset>	
+		
+		<br>
+
+        <fieldset>
+            <legend style="color:#b900ff; font-weight:bold;"> <p style="border-style:dotted"> <u> Δημιουργία κωδικού πρόσβασης </p> </u> </legend>
+			
+			<label for="password" title="Δημιουργήστε έναν ασφαλή κωδικό πρόσβασης"> Συνθηματικό πρόσβασης: </label>
+			<input type="password" id="password" name="password" required> <!-- Τα γράμματα δεν είναι ορατά. -->
+			<br> <br>
+            
+			<label for="confirmPassword" title="Επιβεβαίωση κωδικού πρόσβασης"> Επιβεβαίωση κωδικού πρόσβασης: </label>
+			<input type="password" id="confirmPassword" name="confirmPassword" required>
+			<br> <br>
+        </fieldset>
+
+        <fieldset>
+            <label>
+                <input type="checkbox" name="terms" required> Έχω διαβάσει και αποδέχομαι τους Όρους & Προϋποθέσεις! <!-- Κουτί επιλογής. -->
+            </label>
+			<br> <br>
+        </fieldset>
+	
+	<center>
+    <button type="submit" style="background-color:#32ff39"> Αποστολή </button>
+    <button type="reset" style="background-color:#ff3232"> Ακύρωση </button>
+	</center>
+
+</body>
+</html>

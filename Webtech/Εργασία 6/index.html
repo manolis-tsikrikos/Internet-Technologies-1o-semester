@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Φόρμα παραγγελίας αθλητικών ειδών</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        form {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        label {
+            margin-top: 10px;
+        }
+        input, select, button {
+            padding: 8px;
+            font-size: 1rem;
+        }
+        .error {
+            border: 1px solid red;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+        }
+        .success-message {
+            color: green;
+            font-size: 1rem;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+    <script>
+        function validateForm(event) {
+            event.preventDefault();
+            const form = document.getElementById('orderForm');
+            const errors = [];
+            const requiredFields = ['gender', 'firstName', 'lastName', 'birthDate', 'email', 'password', 'confirmPassword'];
+
+            requiredFields.forEach(field => {
+                const input = document.getElementById(field);
+                input.classList.remove('error');
+                const errorMessage = document.querySelector(`#${field} + .error-message`);
+                if (errorMessage) errorMessage.remove();
+
+                if (!input.value.trim()) {
+                    errors.push({ field, message: 'Αυτό το πεδίο είναι υποχρεωτικό.' });
+                }
+            });
+
+            const firstName = document.getElementById('firstName');
+            if (firstName.value && !/^\p{Greek}+$/u.test(firstName.value)) {
+                errors.push({ field: 'firstName', message: 'Το όνομα πρέπει να είναι μόνο ελληνικά.' });
+            }
+
+            const lastName = document.getElementById('lastName');
+            if (lastName.value && lastName.value.length > 50) {
+                errors.push({ field: 'lastName', message: 'Το επώνυμο πρέπει να έχει έως 50 χαρακτήρες.' });
+            }
+
+            const birthDate = document.getElementById('birthDate');
+            const birthDateValue = new Date(birthDate.value);
+            const today = new Date();
+            const age = today.getFullYear() - birthDateValue.getFullYear();
+            if (birthDateValue && (age < 16 || (age === 16 && today < new Date(birthDateValue.setFullYear(today.getFullYear()))))) {
+                errors.push({ field: 'birthDate', message: 'Πρέπει να είστε άνω των 16 ετών.' });
+            }
+
+            const password = document.getElementById('password');
+            if (password.value && !/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/.test(password.value)) {
+                errors.push({ field: 'password', message: 'Το συνθηματικό πρέπει να περιέχει τουλάχιστον 8 χαρακτήρες, ένα κεφαλαίο γράμμα, έναν αριθμό και ένα ειδικό χαρακτήρα.' });
+            }
+
+            const confirmPassword = document.getElementById('confirmPassword');
+            if (password.value !== confirmPassword.value) {
+                errors.push({ field: 'confirmPassword', message: 'Τα συνθηματικά δεν ταιριάζουν.' });
+            }
+
+            const terms = document.getElementById('terms');
+            if (!terms.checked) {
+                errors.push({ field: 'terms', message: 'Πρέπει να αποδεχτείτε τους όρους και τις προϋποθέσεις.' });
+            }
+
+            if (errors.length > 0) {
+                errors.forEach(error => {
+                    const input = document.getElementById(error.field);
+                    input.classList.add('error');
+                    const errorMessage = document.createElement('div');
+                    errorMessage.classList.add('error-message');
+                    errorMessage.textContent = error.message;
+                    input.after(errorMessage);
+                });
+                return;
+            }
+
+            form.submit();
+        }
+
+        function clearForm() {
+            const form = document.getElementById('orderForm');
+            form.reset();
+            document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+            document.querySelectorAll('.error-message').forEach(el => el.remove());
+        }
+    </script>
+</head>
+<body>
+    <h1> Φόρμα παραγγελίας</h1>
+    <form id="orderForm" method="POST" action="process_order.php">
+        <label for="gender"> Φύλο: </label>
+        <select id="gender" name="gender">
+            <option value="Άνδρας"> Άνδρας </option>
+            <option value="Γυναίκα"> Γυναίκα </option>
+            <option value="Άλλο"> Άλλο </option>
+        </select>
+
+        <label for="firstName"> Όνομα: </label>
+        <input type="text" id="firstName" name="firstName">
+
+        <label for="lastName"> Επώνυμο: </label>
+        <input type="text" id="lastName" name="lastName">
+
+        <label for="birthDate"> Ημερομηνία γέννησης:</label>
+        <input type="date" id="birthDate" name="birthDate">
+
+        <label for="category"> Κατηγορία αθλητικού είδους:</label>
+        <select id="category" name="category">
+            <option value="Ρούχα"> Ρούχα </option>
+            <option value="Παπούτσια"> Παπούτσια </option>
+            <option value="Εξοπλισμός"> Εξοπλισμός </option>
+            <option value="Άλλα"> Άλλα </option>
+        </select>
+
+        <label for="size"> Μέγεθος: </label>
+        <input type="text" id="size" name="size">
+
+        <label for="color"> Χρώμα προτίμησης: </label>
+        <input type="text" id="color" name="color">
+
+        <label for="quantity"> Ποσότητα: </label>
+        <input type="number" id="quantity" name="quantity" min="1" max="99">
+
+        <label for="address"> Διεύθυνση αποστολής: </label>
+        <input type="text" id="address" name="address">
+
+        <label for="city"> Πόλη: </label>
+        <input type="text" id="city" name="city">
+
+        <label for="zip"> Ταχυδρομικός κώδικας: </label>
+        <input type="text" id="zip" name="zip">
+
+        <label for="phone"> Τηλέφωνο επικοινωνίας: </label>
+        <input type="text" id="phone" name="phone">
+
+        <label for="email"> Email: </label>
+        <input type="email" id="email" name="email">
+
+        <label for="password"> Συνθηματικό πρόσβασης: </label>
+        <input type="password" id="password" name="password">
+
+        <label for="confirmPassword"> Επιβεβαίωση συνθηματικού: </label>
+        <input type="password" id="confirmPassword" name="confirmPassword">
+
+        <label>
+            <input type="checkbox" id="terms" name="terms"> Έχω διαβάσει και αποδέχομαι τους Όρους & Προϋποθέσεις.
+        </label>
+
+        <div>
+            <button type="submit" onclick="validateForm(event)"> Αποθήκευση </button>
+            <button type="button" onclick="clearForm()"> Καθαρισμός </button>
+        </div>
+    </form>
+</body>
+</html>
